@@ -89,7 +89,7 @@ class Battle extends React.Component {
     this.state = {
       playerOneName: '',
       playerTwoName: '',
-      playerOneIamge: null,
+      playerOneImage: null,
       playerTwoImage: null,
     };
     
@@ -125,6 +125,7 @@ class Battle extends React.Component {
     var playerTwoName = this.state.playerTwoName;
     var playerOneImage = this.state.playerOneImage;
     var playerTwoImage = this.state.playerTwoImage;
+
     return(
       <div>
         <div className='row'>
