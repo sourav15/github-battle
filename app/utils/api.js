@@ -1,14 +1,21 @@
 var axios = require('axios');
 
+var id = "a268013344413bff4eb6";
+var sec = "7b3c173268611e081efc66aa71fe94b82d62631b";
+var params = "?client_id=" + id + "&client_secret=" + sec;
+
 function getProfile(username) {
-  return axios.get('https://api.github.com/users/' + username)
+  return axios.get('https://api.github.com/users/' + username + params)
     .then(function(user) {
       return user.data;
     });
 }
 
 function getRepos(username) {
-  return axios.get('https://api.github.com/users/' + username + '/repos&per_page=100');
+  return axios.get('https://api.github.com/users/' + username + '/repos' + params + '&per_page=100')
+        .then(function(repos) {
+            return repos.data;
+        });
 }
 
 function getStarCount(repos) {
@@ -30,8 +37,8 @@ function handleError (error) {
 }
 
 function getUserData(player) {
-  return axios.all([getProfile(player),getRepos(palyer)]).
-    then(function(data) {
+  return axios.all([getProfile(player),getRepos(player)]).
+      then(function(data) {
       var profile = data[0];
       var repo = data[1];
 
@@ -50,8 +57,8 @@ function sortPlayers (players) {
 
 module.exports = {
   battle: function(players) {
-    return axios.all(players.map(getuserData)).
-      then(sortpalyers).
+    return axios.all(players.map(getUserData)).
+      then(sortPlayers).
       catch(handleError);
   },
    
